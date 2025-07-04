@@ -1,10 +1,22 @@
+import Header from "@/components/Header";
+import { Colors } from "@/constants/Colors";
 import React from "react";
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: Colors.light.background,
+        padding: 20,
+      }}
+    >
+      <SafeAreaView>
+        <Header />
+      </SafeAreaView>
+    </ScrollView>
   );
 }
