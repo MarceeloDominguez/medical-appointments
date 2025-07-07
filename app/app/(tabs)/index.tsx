@@ -1,22 +1,31 @@
 import Header from "@/components/Header";
+import ListServiceOptions from "@/components/ListServiceOptions";
 import { Colors } from "@/constants/Colors";
+import { serviceOptions } from "@/constants/ServiceOptions";
 import React from "react";
-import { ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { FlatList, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <ScrollView
+    <FlatList
+      keyExtractor={(_, index) => index.toString()}
+      data={serviceOptions}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{
-        flexGrow: 1,
-        backgroundColor: Colors.light.background,
-        padding: 20,
-      }}
-    >
-      <SafeAreaView>
-        <Header />
-      </SafeAreaView>
-    </ScrollView>
+      ListHeaderComponent={() => <Header />}
+      ListHeaderComponentStyle={{ marginBottom: 20 }}
+      columnWrapperStyle={{ gap: 10 }}
+      contentContainerStyle={styles.container}
+      numColumns={2}
+      renderItem={({ item }) => <ListServiceOptions item={item} />}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.light.background,
+    padding: 20,
+    paddingTop: 50,
+    flex: 1,
+  },
+});
