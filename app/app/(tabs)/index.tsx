@@ -11,7 +11,13 @@ export default function HomeScreen() {
       keyExtractor={(_, index) => index.toString()}
       data={serviceOptions}
       showsVerticalScrollIndicator={false}
-      ListHeaderComponent={() => <Header />}
+      ListHeaderComponent={() => (
+        <Header
+          title="Hola Marcelo!"
+          subtitle="Que siempre estés con buena salud"
+          showIconBell={true}
+        />
+      )}
       ListHeaderComponentStyle={{ marginBottom: 20 }}
       columnWrapperStyle={{ gap: 10 }}
       contentContainerStyle={styles.container}

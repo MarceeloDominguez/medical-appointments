@@ -16,7 +16,7 @@ type Props = {
 export default function ListServiceOptions({ item }: Props) {
   return (
     <Link
-      href={"/searchappointment"}
+      href={item.route as any}
       style={{
         ...styles.container,
         backgroundColor: item.color,

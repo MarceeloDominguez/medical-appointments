@@ -9,6 +9,7 @@ export type ServiceOption = {
   iconColor: string;
   backgroundIcon: string;
   borderColor: string;
+  route?: string;
 };
 
 export const serviceOptions: ServiceOption[] = [
@@ -21,6 +22,7 @@ export const serviceOptions: ServiceOption[] = [
     iconColor: "#254edb",
     backgroundIcon: "rgba(72, 69, 219, 0.2)",
     borderColor: "#254edb",
+    route: "/searchappointment",
   },
   {
     id: 2,
@@ -31,6 +33,7 @@ export const serviceOptions: ServiceOption[] = [
     iconColor: "#209c05",
     backgroundIcon: "rgba(12, 136, 22, 0.2)",
     borderColor: "#209c05",
+    route: "/searchhospitals",
   },
   {
     id: 3,
@@ -41,6 +44,7 @@ export const serviceOptions: ServiceOption[] = [
     iconColor: "#db2525",
     backgroundIcon: "rgba(194, 79, 13, 0.2)",
     borderColor: "#db2525",
+    route: "/requestconsultation",
   },
   {
     id: 4,
@@ -51,5 +55,6 @@ export const serviceOptions: ServiceOption[] = [
     iconColor: "#db2525",
     backgroundIcon: "rgba(180, 12, 12, 0.2)",
     borderColor: "#db2525",
+    route: "/findpharmacy",
   },
 ];
