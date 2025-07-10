@@ -1,20 +1,24 @@
 import Header from "@/components/Header";
 import SpecialtyCard from "@/components/SpecialtyCard";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
 import { Colors } from "@/constants/Colors";
+import { useGetSpecialties } from "@/queries/specialties";
 import { Stack } from "expo-router";
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-const SPECIALTIES = [
-  { id: "1", name: "Cardiología" },
-  { id: "2", name: "Dermatología" },
-  { id: "3", name: "Pediatría" },
-  { id: "4", name: "Psiquiatría" },
-  { id: "5", name: "Traumatología" },
-  { id: "6", name: "Neurología" },
-];
-
 export default function SearchAppointment() {
+  const { data: SPECIALTIES, isLoading, error } = useGetSpecialties();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error title="Hubo un error, volver a intentar." />;
+  }
+
   return (
     <View style={styles.container}>
       <Stack.Screen
