@@ -9,4 +9,12 @@ export const SpecialtyModel = {
       },
     });
   },
+
+  async getSpecialtyById(id) {
+    return await prisma.specialty.findUnique({
+      where: {
+        id: id,
+      },
+    });
+  },
 };
