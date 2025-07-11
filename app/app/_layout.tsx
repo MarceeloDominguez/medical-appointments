@@ -18,7 +18,7 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack>
+      <Stack screenOptions={{ animation: "fade" }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <StatusBar style="auto" />
       </Stack>

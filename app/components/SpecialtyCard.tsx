@@ -1,7 +1,8 @@
 import { Colors } from "@/constants/Colors";
 import Icon from "@expo/vector-icons/Ionicons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type SpecialtyCard = {
   id: string;
@@ -13,8 +14,15 @@ type SpecialtyCardProps = {
 };
 
 export default function SpecialtyCard({ item }: SpecialtyCardProps) {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() =>
+        router.push({ pathname: "/specialty/[id]", params: { id: item.id } })
+      }
+    >
       <View style={styles.wrapperText}>
         <Icon name="person-outline" size={24} color={Colors.light.text} />
         <View>
@@ -27,7 +35,7 @@ export default function SpecialtyCard({ item }: SpecialtyCardProps) {
         size={20}
         color={Colors.light.primary}
       />
-    </View>
+    </Pressable>
   );
 }
 
