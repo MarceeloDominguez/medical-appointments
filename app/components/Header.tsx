@@ -2,18 +2,19 @@ import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CustomSearch from "./CustomSearch";
 
 type Props = {
   title: string;
   subtitle: string;
   showIconBell?: boolean;
+  children?: React.ReactNode;
 };
 
 export default function Header({
   title,
   subtitle,
   showIconBell = false,
+  children,
 }: Props) {
   return (
     <View>
@@ -28,7 +29,7 @@ export default function Header({
           </View>
         )}
       </View>
-      <CustomSearch />
+      {children}
     </View>
   );
 }

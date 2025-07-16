@@ -1,3 +1,4 @@
+import CustomSearch from "@/components/CustomSearch";
 import Header from "@/components/Header";
 import ListServiceOptions from "@/components/ListServiceOptions";
 import { Colors } from "@/constants/Colors";
@@ -16,7 +17,9 @@ export default function HomeScreen() {
           title="Hola Marcelo!"
           subtitle="Que siempre estés con buena salud"
           showIconBell={true}
-        />
+        >
+          <CustomSearch placeholderText="Síntomas, enfermedades..." />
+        </Header>
       )}
       ListHeaderComponentStyle={{ marginBottom: 20 }}
       columnWrapperStyle={{ gap: 10 }}

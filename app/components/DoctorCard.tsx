@@ -1,11 +1,17 @@
 import { Colors } from "@/constants/Colors";
 import { default as IconStar } from "@expo/vector-icons/Ionicons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function DoctorCard() {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => router.push({ pathname: "/doctor/[id]" })}
+    >
       <View style={styles.avatar}></View>
       <View style={{ flex: 1 }}>
         <Text numberOfLines={1} style={styles.doctorName}>
@@ -19,7 +25,7 @@ export default function DoctorCard() {
         <IconStar name="star-sharp" size={16} color="#f38744" />
         <Text style={styles.rating}>4.5</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

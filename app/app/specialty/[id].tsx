@@ -37,7 +37,7 @@ export default function SpecialtyDetails() {
 
   return (
     <View style={styles.container}>
-      <CustomSearch />
+      <CustomSearch placeholderText="Buscar un doctor" />
       <FlatList
         keyExtractor={(_, index) => index.toString()}
         data={[1, 2, 3, 4, 5]}

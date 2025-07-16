@@ -4,7 +4,13 @@ import IconsFilter from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-export default function CustomSearch() {
+type CustomSearchProps = {
+  placeholderText?: string;
+};
+
+export default function CustomSearch({
+  placeholderText = "Placeholder text",
+}: CustomSearchProps) {
   return (
     <View style={styles.wrapperInput}>
       <IconSearch
@@ -13,7 +19,7 @@ export default function CustomSearch() {
         style={styles.iconSearch}
         color={Colors.light.text}
       />
-      <TextInput placeholder="Síntomas, enfermedades..." style={styles.input} />
+      <TextInput placeholder={placeholderText} style={styles.input} />
       <View style={styles.wrapperIconFilter}>
         <IconsFilter
           size={24}

@@ -1,3 +1,4 @@
+import CustomSearch from "@/components/CustomSearch";
 import Header from "@/components/Header";
 import SpecialtyCard from "@/components/SpecialtyCard";
 import Error from "@/components/ui/Error";
@@ -45,7 +46,9 @@ export default function SearchAppointment() {
           <Header
             title="Especialidades médicas"
             subtitle="Selecciona una especialidad médica para ver las citas disponibles"
-          />
+          >
+            <CustomSearch placeholderText="Buscar una especialidad" />
+          </Header>
         )}
         renderItem={({ item }) => <SpecialtyCard item={item} />}
       />
