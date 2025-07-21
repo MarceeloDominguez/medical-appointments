@@ -4,4 +4,8 @@ export const DoctorService = {
   async getAllDoctors() {
     return await DoctorModel.getAllDoctors();
   },
+
+  async getDoctorsBySpecialty(specialtyId) {
+    return await DoctorModel.getDoctorsBySpecialty(specialtyId);
+  },
 };

@@ -9,4 +9,24 @@ export const DoctorModel = {
       },
     });
   },
+
+  async getDoctorsBySpecialty(specialtyId) {
+    return await prisma.doctor.findMany({
+      where: {
+        specialtyId: specialtyId,
+      },
+      include: {
+        user: true,
+        specialty: true,
+        appointments: {
+          include: {
+            patient: true,
+          },
+        },
+      },
+      orderBy: {
+        id: "asc",
+      },
+    });
+  },
 };
