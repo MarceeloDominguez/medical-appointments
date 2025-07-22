@@ -1,6 +1,9 @@
 import CustomSearch from "@/components/CustomSearch";
 import DoctorCard from "@/components/DoctorCard";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
 import { Colors } from "@/constants/Colors";
+import { useGetDoctorsBySpecialty } from "@/queries/doctors";
 import { useSpecialtyById } from "@/queries/specialties";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
@@ -15,6 +18,11 @@ import {
 export default function SpecialtyDetails() {
   const { id } = useLocalSearchParams();
   const { data, isLoading } = useSpecialtyById(Number(id));
+  const {
+    data: doctorsBySpecialty,
+    isLoading: doctorsBySpecialtyLoading,
+    error,
+  } = useGetDoctorsBySpecialty(Number(id));
 
   const navigation = useNavigation();
 
@@ -35,16 +43,31 @@ export default function SpecialtyDetails() {
     });
   }, [navigation, isLoading, data]);
 
+  if (doctorsBySpecialtyLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <View style={styles.container}>
       <CustomSearch placeholderText="Buscar un doctor" />
       <FlatList
         keyExtractor={(_, index) => index.toString()}
-        data={[1, 2, 3, 4, 5]}
+        data={doctorsBySpecialty}
         showsVerticalScrollIndicator={false}
         ListHeaderComponentStyle={{ marginBottom: 10 }}
         contentContainerStyle={styles.contentContainerStyle}
         renderItem={({ item }) => <DoctorCard />}
+        ListEmptyComponent={() => (
+          <View style={{ alignItems: "center", marginTop: 20 }}>
+            <Text style={{ color: Colors.light.text }}>
+              No hay doctores disponibles para esta especialidad.
+            </Text>
+          </View>
+        )}
       />
     </View>
   );
