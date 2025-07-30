@@ -8,4 +8,8 @@ export const DoctorService = {
   async getDoctorsBySpecialty(specialtyId) {
     return await DoctorModel.getDoctorsBySpecialty(specialtyId);
   },
+
+  async getDoctorById(doctorId) {
+    return await DoctorModel.getDoctorById(doctorId);
+  },
 };

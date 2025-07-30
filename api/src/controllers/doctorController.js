@@ -26,4 +26,20 @@ export const DoctorController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+  async getDoctorById(req, res) {
+    try {
+      const doctorId = req.params.id;
+
+      const doctor = await DoctorService.getDoctorById(doctorId);
+      if (!doctor) {
+        return res.status(404).json({ message: "Doctor not found" });
+      }
+
+      res.status(200).json(doctor);
+    } catch (error) {
+      console.error("Error fetching doctor by ID:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };

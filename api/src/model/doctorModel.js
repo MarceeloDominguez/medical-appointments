@@ -7,6 +7,10 @@ export const DoctorModel = {
       orderBy: {
         id: "asc",
       },
+      include: {
+        user: true,
+        specialty: true,
+      },
     });
   },
 
@@ -26,6 +30,23 @@ export const DoctorModel = {
       },
       orderBy: {
         id: "asc",
+      },
+    });
+  },
+
+  async getDoctorById(doctorId) {
+    return await prisma.doctor.findUnique({
+      where: {
+        id: doctorId,
+      },
+      include: {
+        user: true,
+        specialty: true,
+        appointments: {
+          include: {
+            patient: true,
+          },
+        },
       },
     });
   },
