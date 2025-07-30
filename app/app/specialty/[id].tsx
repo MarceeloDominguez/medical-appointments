@@ -60,7 +60,7 @@ export default function SpecialtyDetails() {
         showsVerticalScrollIndicator={false}
         ListHeaderComponentStyle={{ marginBottom: 10 }}
         contentContainerStyle={styles.contentContainerStyle}
-        renderItem={({ item }) => <DoctorCard />}
+        renderItem={({ item }) => <DoctorCard doctor={item} />}
         ListEmptyComponent={() => (
           <View style={{ alignItems: "center", marginTop: 20 }}>
             <Text style={{ color: Colors.light.text }}>

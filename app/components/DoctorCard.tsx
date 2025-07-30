@@ -1,24 +1,34 @@
 import { Colors } from "@/constants/Colors";
+import { Doctor } from "@/type/type";
 import { default as IconStar } from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function DoctorCard() {
+type DoctorCardProps = {
+  doctor: Doctor;
+};
+
+export default function DoctorCard({ doctor }: DoctorCardProps) {
   const router = useRouter();
 
   return (
     <Pressable
       style={styles.container}
-      onPress={() => router.push({ pathname: "/doctor/[id]" })}
+      onPress={() =>
+        router.push({
+          pathname: "/doctor/[id]",
+          params: { id: doctor.id },
+        })
+      }
     >
       <View style={styles.avatar}></View>
       <View style={{ flex: 1 }}>
         <Text numberOfLines={1} style={styles.doctorName}>
-          Dr. Stone Gaze
+          {doctor.user.name}
         </Text>
         <Text numberOfLines={1} style={styles.doctorBio}>
-          Cardiologa
+          {doctor.specialty.name}
         </Text>
       </View>
       <View style={styles.wrapperIconStar}>
@@ -54,6 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.light.textSecondary,
     marginTop: 4,
+    textTransform: "capitalize",
   },
   wrapperIconStar: {
     flexDirection: "row",

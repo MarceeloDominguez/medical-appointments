@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 type InfoCardProp = {
   title: string;
-  description: string;
+  description?: string;
   children?: React.ReactNode;
 };
 

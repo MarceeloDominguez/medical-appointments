@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/Colors";
+import { WorkingHours } from "@/type/type";
 import {
   default as ClockIcon,
   default as HospitalIcon,
@@ -6,7 +7,15 @@ import {
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function InfoDoctorCard() {
+type InfoDoctorCardProps = {
+  hospital: string;
+  workingHours?: WorkingHours | null;
+};
+
+export default function InfoDoctorCard({
+  hospital,
+  workingHours,
+}: InfoDoctorCardProps) {
   return (
     <View style={styles.container}>
       <View style={styles.containerInfo}>
@@ -14,14 +23,17 @@ export default function InfoDoctorCard() {
           <HospitalIcon name="hospital" size={16} color={"#e21717"} />
           <Text style={styles.title}>Hospital</Text>
         </View>
-        <Text style={styles.subtitle}>RS. Herminei</Text>
+        <Text style={styles.subtitle}>{hospital}</Text>
       </View>
       <View style={styles.containerInfo}>
         <View style={styles.wrapperInfo}>
           <ClockIcon name="clock" size={16} color={Colors.light.primary} />
           <Text style={styles.title}>Horarios</Text>
         </View>
-        <Text style={styles.subtitle}>07:00 - 18:00</Text>
+        <Text style={styles.subtitle}>
+          {workingHours?.start ? workingHours?.start : "11:00"} -{" "}
+          {workingHours?.end ? workingHours?.end : "14:00"}
+        </Text>
       </View>
     </View>
   );

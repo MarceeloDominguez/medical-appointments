@@ -1,11 +1,25 @@
 import InfoCard from "@/components/InfoCard";
 import InfoDoctorCard from "@/components/InfoDoctorCard";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
 import { Colors } from "@/constants/Colors";
-import { Stack } from "expo-router";
+import { useGetDoctorById } from "@/queries/doctors";
+import { Stack, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function DoctorDetails() {
+  const { id } = useLocalSearchParams();
+  const { data, isLoading, error } = useGetDoctorById(Number(id));
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Stack.Screen
@@ -19,22 +33,19 @@ export default function DoctorDetails() {
         <View style={styles.avatar}></View>
         <View style={{ flex: 1 }}>
           <Text numberOfLines={1} style={styles.doctorName}>
-            Dr. Stone Gaze
+            {data?.user.name}
           </Text>
           <Text numberOfLines={1} style={styles.doctorBio}>
-            Cardiologa
+            {data?.specialty.name}
           </Text>
         </View>
       </View>
-      <InfoDoctorCard />
-      <InfoCard
-        title="Biografía"
-        description="Eu sunt ea id ea ullamco et culpa nostrud. Enim veniam cillum ipsum aliquip consectetur incididunt nulla nisi proident voluptate anim."
+      <InfoDoctorCard
+        hospital={data?.hospital!}
+        workingHours={data?.workingHours}
       />
-      <InfoCard
-        title="Lugar de trabajo"
-        description="Eu sunt ea id ea ullamco et culpa nostrud. Consequat nostrud nulla labore velit."
-      >
+      <InfoCard title="Biografía" description={data?.bio} />
+      <InfoCard title="Lugar de trabajo" description={data?.location}>
         <View
           style={{
             height: 120,
@@ -72,10 +83,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: Colors.light.text,
+    textTransform: "capitalize",
   },
   doctorBio: {
     fontSize: 13,
     color: Colors.light.textSecondary,
     marginTop: 4,
+    textTransform: "capitalize",
   },
 });
