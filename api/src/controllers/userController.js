@@ -10,4 +10,16 @@ export const UserController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+  async registerUser(req, res) {
+    try {
+      const newUser = await UserService.registerUser(req.body);
+      res.status(201).json(newUser);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error registering user", error: error.message });
+      console.log(error);
+    }
+  },
 };
