@@ -12,4 +12,8 @@ export const DoctorService = {
   async getDoctorById(doctorId) {
     return await DoctorModel.getDoctorById(doctorId);
   },
+
+  async createDoctor(data) {
+    return await DoctorModel.createDoctor(data);
+  },
 };

@@ -8,7 +8,15 @@ export const DoctorModel = {
         id: "asc",
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+          },
+        },
         specialty: true,
       },
     });
@@ -20,11 +28,27 @@ export const DoctorModel = {
         specialtyId: specialtyId,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+          },
+        },
         specialty: true,
         appointments: {
           include: {
-            patient: true,
+            patient: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true,
+              },
+            },
           },
         },
       },
@@ -40,13 +64,56 @@ export const DoctorModel = {
         id: doctorId,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+          },
+        },
         specialty: true,
         appointments: {
           include: {
-            patient: true,
+            patient: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true,
+              },
+            },
           },
         },
+      },
+    });
+  },
+
+  async createDoctor(data) {
+    const { userId, specialtyId, bio, hospital, location, workingHours } = data;
+
+    return await prisma.doctor.create({
+      data: {
+        userId,
+        specialtyId,
+        bio,
+        hospital,
+        location,
+        workingHours,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+          },
+        },
+        specialty: true,
       },
     });
   },

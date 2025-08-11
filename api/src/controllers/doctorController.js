@@ -42,4 +42,29 @@ export const DoctorController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+  async createDoctor(req, res) {
+    try {
+      const { userId, specialtyId, bio, hospital, location, workingHours } =
+        req.body;
+
+      if (!userId || !specialtyId || !bio || !hospital || !location) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const newDoctor = await DoctorService.createDoctor({
+        userId,
+        specialtyId,
+        bio,
+        hospital,
+        location,
+        workingHours,
+      });
+
+      res.status(201).json(newDoctor);
+    } catch (error) {
+      console.error("Error creating doctor:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };
