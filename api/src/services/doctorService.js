@@ -16,4 +16,8 @@ export const DoctorService = {
   async createDoctor(data) {
     return await DoctorModel.createDoctor(data);
   },
+
+  async updateDoctor(doctorId, data) {
+    return await DoctorModel.updateDoctor(doctorId, data);
+  },
 };

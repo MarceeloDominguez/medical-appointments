@@ -117,4 +117,20 @@ export const DoctorModel = {
       },
     });
   },
+
+  async updateDoctor(doctorId, data) {
+    const { bio, hospital, location, workingHours } = data;
+
+    return await prisma.doctor.update({
+      where: {
+        id: doctorId,
+      },
+      data: {
+        bio,
+        hospital,
+        location,
+        workingHours,
+      },
+    });
+  },
 };

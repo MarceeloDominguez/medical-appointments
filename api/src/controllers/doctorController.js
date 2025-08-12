@@ -67,4 +67,24 @@ export const DoctorController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+  async updateDoctor(req, res) {
+    try {
+      const doctorId = req.params.id;
+      const doctorData = req.body;
+
+      const updatedDoctor = await DoctorService.updateDoctor(
+        doctorId,
+        doctorData
+      );
+
+      if (!updatedDoctor) {
+        return res.status(404).json({ message: "Doctor not found" });
+      }
+      res.status(200).json(updatedDoctor);
+    } catch (error) {
+      console.error("Error updating doctor:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };
