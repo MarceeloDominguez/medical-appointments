@@ -9,4 +9,32 @@ export const AppointmentModel = {
       },
     });
   },
+
+  async createAppointment({ date, patientId, doctorId, status }) {
+    return await prisma.appointment.create({
+      data: {
+        date,
+        patientId,
+        doctorId,
+        status,
+      },
+      include: {
+        doctor: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true,
+              },
+            },
+            specialty: true,
+          },
+        },
+        patient: true,
+      },
+    });
+  },
 };
