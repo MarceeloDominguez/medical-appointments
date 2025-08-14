@@ -13,4 +13,8 @@ export const AppointmentService = {
       status,
     });
   },
+
+  async getAllAppointmentsByPatient(patientId) {
+    return await AppointmentModel.getAllAppointmentsByPatient(patientId);
+  },
 };

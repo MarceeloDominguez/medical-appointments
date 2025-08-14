@@ -30,4 +30,17 @@ export const AppointmentController = {
       res.status(400).json({ message: "Bad Request", error: error.message });
     }
   },
+
+  async getAllAppointmentsByPatient(req, res) {
+    try {
+      const { patientId } = req.params;
+      const appointments = await AppointmentService.getAllAppointmentsByPatient(
+        patientId
+      );
+      res.status(200).json(appointments);
+    } catch (error) {
+      console.error("Error fetching appointments by patient:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  },
 };
