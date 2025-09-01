@@ -10,7 +10,8 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function DoctorDetails() {
   const { id } = useLocalSearchParams();
-  const { data, isLoading, error } = useGetDoctorById(Number(id));
+  const doctorId = Array.isArray(id) ? id[0] : id ?? "";
+  const { data, isLoading, error } = useGetDoctorById(doctorId);
 
   if (isLoading) {
     return <Loading />;

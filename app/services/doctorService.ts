@@ -13,7 +13,7 @@ export async function getDoctorsBySpecialtyId(specialtyId: number) {
   return data;
 }
 
-export async function getDoctorById(doctorId: number): Promise<Doctor> {
+export async function getDoctorById(doctorId: string): Promise<Doctor> {
   const response = await fetch(
     `${process.env.EXPO_PUBLIC_API_URL}/doctors/${doctorId}`
   );

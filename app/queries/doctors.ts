@@ -12,7 +12,7 @@ export const useGetDoctorsBySpecialty = (specialtyId: number) => {
   });
 };
 
-export const useGetDoctorById = (doctorId: number) => {
+export const useGetDoctorById = (doctorId: string) => {
   return useQuery({
     queryKey: ["doctor", doctorId],
     queryFn: () => getDoctorById(doctorId),
