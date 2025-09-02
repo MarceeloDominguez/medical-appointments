@@ -23,7 +23,9 @@ export default function InfoDoctorCard({
           <HospitalIcon name="hospital" size={16} color={"#e21717"} />
           <Text style={styles.title}>Hospital</Text>
         </View>
-        <Text style={styles.subtitle}>{hospital}</Text>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.subtitle}>
+          {hospital}
+        </Text>
       </View>
       <View style={styles.containerInfo}>
         <View style={styles.wrapperInfo}>
@@ -42,11 +44,12 @@ export default function InfoDoctorCard({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     marginTop: 20,
     marginBottom: 10,
   },
   containerInfo: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 4,
@@ -66,5 +69,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.light.text,
     fontWeight: "600",
+    textAlign: "center",
   },
 });

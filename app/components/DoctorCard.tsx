@@ -3,7 +3,7 @@ import { Doctor } from "@/type/type";
 import { default as IconStar } from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 type DoctorCardProps = {
   doctor: Doctor;
@@ -22,7 +22,10 @@ export default function DoctorCard({ doctor }: DoctorCardProps) {
         })
       }
     >
-      <View style={styles.avatar}></View>
+      <Image
+        source={require("@/assets/images/avatar-default.png")}
+        style={styles.avatar}
+      />
       <View style={{ flex: 1 }}>
         <Text numberOfLines={1} style={styles.doctorName}>
           {doctor.user.name}
@@ -54,6 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#a6a8aa",
+    resizeMode: "contain",
   },
   doctorName: {
     fontSize: 15,

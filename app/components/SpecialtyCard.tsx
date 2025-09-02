@@ -2,7 +2,7 @@ import { Colors } from "@/constants/Colors";
 import Icon from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 type SpecialtyCard = {
   id: string;
@@ -12,6 +12,22 @@ type SpecialtyCard = {
 type SpecialtyCardProps = {
   item: SpecialtyCard;
 };
+
+const specialtyImages: Record<string, any> = {
+  cardiologia: require("@/assets/icons/cardiologia.png"),
+  dermatologia: require("@/assets/icons/dermatologia.png"),
+  pediatria: require("@/assets/icons/pediatria.png"),
+  psiquiatria: require("@/assets/icons/neurologia.png"),
+  traumatologia: require("@/assets/icons/traumatologia.png"),
+  neurologia: require("@/assets/icons/neurologia.png"),
+};
+
+function normalize(text: string) {
+  return text
+    .toLowerCase()
+    .normalize("NFD") // separa las tildes
+    .replace(/[\u0300-\u036f]/g, ""); // elimina las tildes
+}
 
 export default function SpecialtyCard({ item }: SpecialtyCardProps) {
   const router = useRouter();
@@ -24,7 +40,13 @@ export default function SpecialtyCard({ item }: SpecialtyCardProps) {
       }
     >
       <View style={styles.wrapperText}>
-        <Icon name="person-outline" size={24} color={Colors.light.text} />
+        <Image
+          style={styles.iconSpecialty}
+          source={
+            specialtyImages[normalize(item.name)] ??
+            require("@/assets/icons/cardiologia.png")
+          }
+        />
         <View>
           <Text style={styles.name}>{item.name}</Text>
           <Text style={styles.subtitle}>Selecciona un médico especialista</Text>
@@ -52,6 +74,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+  },
+  iconSpecialty: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain",
   },
   name: {
     color: Colors.light.text,
