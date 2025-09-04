@@ -1,8 +1,10 @@
 import Header from "@/components/Header";
+import SelectableCard from "@/components/SelectableCard";
+import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const days = Array.from({ length: 7 }).map((_, index) => {
   const date = new Date();
@@ -16,10 +18,14 @@ const days = Array.from({ length: 7 }).map((_, index) => {
 });
 
 export default function MakeAppointment() {
-  const [selecctedDate, setSelecctedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <Stack.Screen
         options={{
           headerTitle: "Agendar cita",
@@ -39,52 +45,57 @@ export default function MakeAppointment() {
           subtitle="Tu médico te atenderá en la fecha y hora seleccionada"
         />
       </View>
-      <View style={{ marginTop: 26 }}>
-        <Text style={styles.title}>Selecciona el día</Text>
+      <View style={styles.wrapperComponentSelectableCard}>
+        <Text style={styles.title}>Selecciona un día</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.containerSelectDate}>
             {days.map((day) => (
-              <Pressable
-                onPress={() => setSelecctedDate(day.id)}
+              <SelectableCard
+                isSelected={selectedDate === day.id}
                 disabled={day.isSunday}
+                onPress={() => setSelectedDate(day.id)}
                 key={day.id}
-                style={{
-                  ...styles.cardSelectDate,
-                  backgroundColor: day.isSunday
-                    ? "#cacad8"
-                    : selecctedDate === day.id
-                    ? Colors.light.primary
-                    : Colors.light.background,
-                  borderColor:
-                    selecctedDate === day.id ? Colors.light.primary : "#bbc1c7",
-                }}
-              >
-                <Text
-                  style={{
-                    color:
-                      selecctedDate === day.id
-                        ? Colors.light.background
-                        : Colors.light.text,
-                    ...styles.day,
-                  }}
-                >
-                  {day.day}
-                </Text>
-                <Text
-                  style={{
-                    color:
-                      selecctedDate === day.id
-                        ? Colors.light.background
-                        : Colors.light.text,
-                    ...styles.date,
-                  }}
-                >
-                  {day.date}
-                </Text>
-              </Pressable>
+                title={day.day}
+                subtitle={day.date.toString()}
+              />
             ))}
           </View>
         </ScrollView>
+      </View>
+      <View style={styles.wrapperComponentSelectableCard}>
+        <Text style={styles.title}>Elige un horario en la mañana</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerSelectDate}>
+            {["8:00", "9:00", "10:00", "11:00", "12:00"].map((time) => (
+              <SelectableCard
+                isSelected={selectedTime === time}
+                onPress={() => setSelectedTime(time)}
+                key={time}
+                title={time}
+                style={{ width: 80 }}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+      <View style={styles.wrapperComponentSelectableCard}>
+        <Text style={styles.title}>Elige un horario en la tarde</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.containerSelectDate}>
+            {["14:00", "15:00", "16:00", "17:00", "18:00"].map((time) => (
+              <SelectableCard
+                isSelected={selectedTime === time}
+                onPress={() => setSelectedTime(time)}
+                key={time}
+                title={time}
+                style={{ width: 80 }}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+      <View style={styles.wrapperButton}>
+        <Button title="Confirmar" />
       </View>
     </ScrollView>
   );
@@ -92,7 +103,7 @@ export default function MakeAppointment() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: Colors.light.background,
   },
   wrapperHeader: {
@@ -111,20 +122,12 @@ const styles = StyleSheet.create({
     gap: 12,
     marginVertical: 12,
   },
-  cardSelectDate: {
-    alignItems: "center",
-    padding: 12,
-    borderRadius: 8,
-    width: 60,
-    borderWidth: 0.5,
+  wrapperComponentSelectableCard: {
+    marginTop: 26,
   },
-  day: {
-    fontWeight: "600",
-    textTransform: "capitalize",
-    fontSize: 13,
-  },
-  date: {
-    fontWeight: "600",
-    fontSize: 13,
+  wrapperButton: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingBottom: 40,
   },
 });
