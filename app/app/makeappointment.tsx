@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import SelectableCard from "@/components/SelectableCard";
 import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -95,7 +95,9 @@ export default function MakeAppointment() {
         </ScrollView>
       </View>
       <View style={styles.wrapperButton}>
-        <Button title="Confirmar" />
+        <Link href="/payment" asChild>
+          <Button title="Confirmar" />
+        </Link>
       </View>
     </ScrollView>
   );
