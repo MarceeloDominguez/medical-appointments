@@ -96,7 +96,7 @@ export default function MakeAppointment() {
       </View>
       <View style={styles.wrapperButton}>
         <Link href="/payment" asChild>
-          <Button title="Confirmar" />
+          <Button title="Siguiente" />
         </Link>
       </View>
     </ScrollView>
