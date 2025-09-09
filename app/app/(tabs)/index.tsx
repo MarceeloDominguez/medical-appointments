@@ -1,5 +1,6 @@
 import CustomSearch from "@/components/CustomSearch";
 import Header from "@/components/Header";
+import ListOfScheduledAppointments from "@/components/ListOfScheduledAppointments";
 import ListServiceOptions from "@/components/ListServiceOptions";
 import { Colors } from "@/constants/Colors";
 import { serviceOptions } from "@/constants/ServiceOptions";
@@ -19,6 +20,7 @@ export default function HomeScreen() {
           showIconBell={true}
         >
           <CustomSearch placeholderText="Síntomas, enfermedades..." />
+          <ListOfScheduledAppointments />
         </Header>
       )}
       ListHeaderComponentStyle={{ marginBottom: 20 }}
