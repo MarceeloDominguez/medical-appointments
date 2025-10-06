@@ -126,16 +126,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
   },
-  // button: {
-  //   backgroundColor: Colors.light.primary,
-  //   height: 40,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   margin: 20,
-  //   borderRadius: 8,
-  // },
-  // textButton: {
-  //   color: Colors.light.background,
-  //   fontWeight: "bold",
-  // },
 });
