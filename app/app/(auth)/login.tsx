@@ -1,9 +1,12 @@
 import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
+import { useLoginUser } from "@/queries/auth";
 import IconEye from "@expo/vector-icons/Ionicons";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -18,8 +21,30 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: loginUser, isPending } = useLoginUser();
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      Alert.alert("Por favor, completa todos los campos.");
+      return;
+    }
+
+    loginUser(
+      { email, password },
+      {
+        onSuccess: () => {
+          Alert.alert("Inicio de sesión exitoso");
+          router.replace("/(tabs)");
+        },
+        onError: (error) => {
+          Alert.alert("Error al iniciar sesión", (error as Error).message);
+        },
+      }
+    );
   };
 
   return (
@@ -66,9 +91,17 @@ export default function LoginScreen() {
           </Text>
         </View>
         <View style={styles.containerButton}>
-          <Link href={"/(tabs)"} asChild>
-            <Button title="Iniciar sesión" style={styles.button} />
-          </Link>
+          <Button
+            title={
+              isPending ? (
+                <ActivityIndicator size={14} color="#ffffff" />
+              ) : (
+                "Iniciar sesión"
+              )
+            }
+            style={styles.button}
+            onPress={handleLogin}
+          />
         </View>
       </SafeAreaView>
     </ScrollView>

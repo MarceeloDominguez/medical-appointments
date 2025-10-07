@@ -1,9 +1,12 @@
 import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
+import { useRegisterUser } from "@/queries/auth";
 import IconEye from "@expo/vector-icons/Ionicons";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -22,8 +25,30 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
+  const { mutate: registerUser, isPending } = useRegisterUser();
+
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleRegister = () => {
+    if (!name || !email || !password || !role) {
+      Alert.alert("Por favor, completa todos los campos.");
+      return;
+    }
+
+    registerUser(
+      { name, email, password, role },
+      {
+        onSuccess: () => {
+          Alert.alert("Registro exitoso", "Ahora puedes iniciar sesión.");
+          router.back();
+        },
+        onError: (error) => {
+          Alert.alert("Error al registrar", (error as Error).message);
+        },
+      }
+    );
   };
 
   return (
@@ -113,9 +138,17 @@ export default function RegisterScreen() {
           </Text>
         </View>
         <View style={styles.containerButton}>
-          <Link href={"/(tabs)"} asChild>
-            <Button title="Regístrate" style={styles.button} />
-          </Link>
+          <Button
+            title={
+              isPending ? (
+                <ActivityIndicator size={14} color="#ffffff" />
+              ) : (
+                "Registrarse"
+              )
+            }
+            style={styles.button}
+            onPress={handleRegister}
+          />
         </View>
       </SafeAreaView>
     </ScrollView>

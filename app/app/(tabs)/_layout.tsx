@@ -1,9 +1,20 @@
 import { Colors } from "@/constants/Colors";
 import Icon from "@expo/vector-icons/Ionicons";
-import { Tabs } from "expo-router";
-import React from "react";
+import { router, Tabs } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import React, { useEffect } from "react";
 
 export default function TabLayout() {
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await SecureStore.getItemAsync("token");
+      if (!token) {
+        router.replace("/(auth)/login");
+      }
+    };
+    checkToken();
+  }, []);
+
   return (
     <Tabs
       screenOptions={{

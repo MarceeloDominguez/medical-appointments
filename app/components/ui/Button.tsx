@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
 type ButtonProps = {
   onPress?: () => void;
-  title: string;
+  title: string | React.ReactElement;
   style?: ViewStyle;
 };
 
