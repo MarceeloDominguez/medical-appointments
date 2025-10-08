@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -12,17 +13,18 @@ export default function RootLayout() {
   });
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ animation: "fade" }}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <StatusBar style="auto" />
-      </Stack>
+      <AuthProvider>
+        <Stack screenOptions={{ animation: "fade" }}>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <StatusBar style="auto" />
+        </Stack>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -4,10 +4,13 @@ import ListOfScheduledAppointments from "@/components/ListOfScheduledAppointment
 import ListServiceOptions from "@/components/ListServiceOptions";
 import { Colors } from "@/constants/Colors";
 import { serviceOptions } from "@/constants/ServiceOptions";
+import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
+  const { user } = useAuth();
+
   return (
     <FlatList
       keyExtractor={(_, index) => index.toString()}
@@ -15,7 +18,7 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => (
         <Header
-          title="Hola Marcelo!"
+          title={"Hola, " + (user ? user.name : "Invitado")}
           subtitle="Que siempre estés con buena salud"
           showIconBell={true}
         >

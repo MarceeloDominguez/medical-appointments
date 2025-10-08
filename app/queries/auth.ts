@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/AuthContext";
 import { loginUser, registerUser } from "@/services/authService";
 import { User } from "@/type/type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,6 +21,7 @@ export const useRegisterUser = () => {
 
 export const useLoginUser = () => {
   const queryClient = useQueryClient();
+  const { setUser } = useAuth();
 
   return useMutation({
     mutationFn: async ({
@@ -31,6 +33,10 @@ export const useLoginUser = () => {
     }) => loginUser(email, password),
     onSuccess: async (data) => {
       await SecureStore.setItemAsync("token", data.token);
+      await SecureStore.setItemAsync("user", JSON.stringify(data.user));
+
+      setUser(data.user);
+
       queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
     onError: (error) => {
