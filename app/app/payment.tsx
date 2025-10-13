@@ -1,7 +1,10 @@
 import ScheduleDateCard from "@/components/ScheduleDateCard";
 import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
-import { Stack } from "expo-router";
+import { useAppointment } from "@/contexts/AppointmentContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGetDoctorById } from "@/queries/doctors";
+import { Stack, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
   Image,
@@ -18,7 +21,12 @@ const paymentMethods = [
 ];
 
 export default function Payment() {
+  const { doctorId } = useLocalSearchParams();
+  const { user } = useAuth();
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+  const { dateConfirmed } = useAppointment();
+
+  const { data } = useGetDoctorById(doctorId as string);
 
   return (
     <ScrollView
@@ -48,10 +56,10 @@ export default function Payment() {
         />
         <View style={{ flex: 1 }}>
           <Text numberOfLines={1} style={styles.doctorName}>
-            Doctor name
+            {data ? data.user.name : "Médico no disponible"}
           </Text>
           <Text numberOfLines={1} style={styles.specialty}>
-            Specialty
+            {data ? data.specialty.name : "Especialidad no disponible"}
           </Text>
         </View>
       </View>

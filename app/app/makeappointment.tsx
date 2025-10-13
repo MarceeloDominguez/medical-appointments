@@ -2,8 +2,9 @@ import Header from "@/components/Header";
 import SelectableCard from "@/components/SelectableCard";
 import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
-import { Link, Stack } from "expo-router";
-import React, { useState } from "react";
+import { useAppointment } from "@/contexts/AppointmentContext";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
+import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const days = Array.from({ length: 7 }).map((_, index) => {
@@ -13,13 +14,21 @@ const days = Array.from({ length: 7 }).map((_, index) => {
     id: index.toString(),
     day: date.toLocaleDateString("es-ES", { weekday: "short" }),
     date: date.getDate(),
+    fullDate: date.toISOString().split("T")[0],
     isSunday: date.getDay() === 0,
   };
 });
 
 export default function MakeAppointment() {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const { doctorId } = useLocalSearchParams();
+
+  const {
+    selectedDate,
+    selectedTime,
+    setSelectedDate,
+    setSelectedTime,
+    handleConfirm,
+  } = useAppointment();
 
   return (
     <ScrollView
@@ -51,9 +60,9 @@ export default function MakeAppointment() {
           <View style={styles.containerSelectDate}>
             {days.map((day) => (
               <SelectableCard
-                isSelected={selectedDate === day.id}
+                isSelected={selectedDate === day.fullDate}
                 disabled={day.isSunday}
-                onPress={() => setSelectedDate(day.id)}
+                onPress={() => setSelectedDate(day.fullDate)}
                 key={day.id}
                 title={day.day}
                 subtitle={day.date.toString()}
@@ -95,8 +104,12 @@ export default function MakeAppointment() {
         </ScrollView>
       </View>
       <View style={styles.wrapperButton}>
-        <Link href="/payment" asChild>
-          <Button title="Siguiente" />
+        <Link href={`/payment?doctorId=${doctorId}`} asChild>
+          <Button
+            title="Siguiente"
+            onPress={handleConfirm}
+            disabled={!selectedDate || !selectedTime}
+          />
         </Link>
       </View>
     </ScrollView>

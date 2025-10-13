@@ -1,3 +1,4 @@
+import { AppoinmentProvider } from "@/contexts/AppointmentContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
@@ -19,11 +20,13 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Stack screenOptions={{ animation: "fade" }}>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <StatusBar style="auto" />
-        </Stack>
+        <AppoinmentProvider>
+          <Stack screenOptions={{ animation: "fade" }}>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <StatusBar style="auto" />
+          </Stack>
+        </AppoinmentProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

@@ -6,14 +6,21 @@ type ButtonProps = {
   onPress?: () => void;
   title: string | React.ReactElement;
   style?: ViewStyle;
+  disabled?: boolean;
 };
 
-export default function Button({ onPress, title, style }: ButtonProps) {
+export default function Button({
+  onPress,
+  title,
+  style,
+  disabled,
+}: ButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.button, style]}
+      style={[styles.button, style, { opacity: disabled ? 0.8 : 1 }]}
       onPress={onPress}
       activeOpacity={0.7}
+      disabled={disabled}
     >
       <Text style={styles.textButton}>{title}</Text>
     </TouchableOpacity>
