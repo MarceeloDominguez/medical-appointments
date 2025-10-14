@@ -28,3 +28,9 @@ export type Doctor = {
   specialty: Specialty;
   createdAt: string;
 };
+
+export type Appointment = {
+  doctorId: string;
+  patientId: string;
+  date: string;
+};

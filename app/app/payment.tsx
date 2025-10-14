@@ -3,10 +3,12 @@ import Button from "@/components/ui/Button";
 import { Colors } from "@/constants/Colors";
 import { useAppointment } from "@/contexts/AppointmentContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCreateAppointment } from "@/queries/appointment";
 import { useGetDoctorById } from "@/queries/doctors";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -22,11 +24,25 @@ const paymentMethods = [
 
 export default function Payment() {
   const { doctorId } = useLocalSearchParams();
+  const idDoctor = Array.isArray(doctorId) ? doctorId[0] : doctorId;
   const { user } = useAuth();
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const { dateConfirmed } = useAppointment();
 
   const { data } = useGetDoctorById(doctorId as string);
+  const { mutate: createAppointment, isPending } = useCreateAppointment();
+
+  const handleConfirmAppointment = () => {
+    if (!doctorId || !user || !dateConfirmed) return;
+
+    createAppointment({
+      doctorId: idDoctor,
+      patientId: user.id!,
+      date: dateConfirmed,
+    });
+
+    router.replace("/(tabs)");
+  };
 
   return (
     <ScrollView
@@ -99,7 +115,17 @@ export default function Payment() {
         </View>
       </View>
       <View style={styles.containerButtonBottom}>
-        <Button title="Confirmar turno" style={{ marginHorizontal: 0 }} />
+        <Button
+          title={
+            isPending ? (
+              <ActivityIndicator size={14} color="#ffffff" />
+            ) : (
+              "Confirmar turno"
+            )
+          }
+          style={{ marginHorizontal: 0 }}
+          onPress={handleConfirmAppointment}
+        />
       </View>
     </ScrollView>
   );
