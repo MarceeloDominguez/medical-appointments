@@ -10,13 +10,20 @@ export const AppointmentModel = {
     });
   },
 
-  async createAppointment({ date, patientId, doctorId, status }) {
+  async createAppointment({
+    date,
+    patientId,
+    doctorId,
+    status,
+    healthCoverage,
+  }) {
     return await prisma.appointment.create({
       data: {
         date,
         patientId,
         doctorId,
         status,
+        healthCoverage,
       },
       include: {
         doctor: {

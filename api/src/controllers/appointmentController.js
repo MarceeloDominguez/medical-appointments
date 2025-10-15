@@ -13,7 +13,7 @@ export const AppointmentController = {
 
   async createAppointment(req, res) {
     try {
-      const { date, patientId, doctorId, status } = req.body;
+      const { date, patientId, doctorId, status, healthCoverage } = req.body;
 
       const parsedDate = new Date(date);
 
@@ -22,6 +22,7 @@ export const AppointmentController = {
         patientId,
         doctorId,
         status,
+        healthCoverage,
       });
 
       res.status(201).json(newAppointment);

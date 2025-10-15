@@ -5,12 +5,19 @@ export const AppointmentService = {
     return await AppointmentModel.getAllAppointments();
   },
 
-  async createAppointment({ date, patientId, doctorId, status }) {
+  async createAppointment({
+    date,
+    patientId,
+    doctorId,
+    status,
+    healthCoverage,
+  }) {
     return await AppointmentModel.createAppointment({
       date,
       patientId,
       doctorId,
       status,
+      healthCoverage,
     });
   },
 

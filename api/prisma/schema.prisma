@@ -41,12 +41,13 @@ model Specialty {
 }
 
 model Appointment {
-  id        String            @id @default(uuid())
-  patientId String
-  doctorId  String
-  date      DateTime?
-  status    AppointmentStatus @default(scheduled)
-  createdAt DateTime          @default(now())
+  id             String            @id @default(uuid())
+  patientId      String
+  doctorId       String
+  date           DateTime?
+  status         AppointmentStatus @default(scheduled)
+  healthCoverage String?
+  createdAt      DateTime          @default(now())
 
   patient User   @relation("PatientAppointments", fields: [patientId], references: [id])
   doctor  Doctor @relation("DoctorAppointments", fields: [doctorId], references: [id])
