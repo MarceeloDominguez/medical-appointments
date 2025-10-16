@@ -2,6 +2,7 @@ export async function createAppointment(appointmentData: {
   doctorId: string;
   patientId: string;
   date: string;
+  healthCoverage: string;
 }) {
   const response = await fetch(
     `${process.env.EXPO_PUBLIC_API_URL}/appointments`,

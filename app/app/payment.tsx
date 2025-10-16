@@ -33,12 +33,13 @@ export default function Payment() {
   const { mutate: createAppointment, isPending } = useCreateAppointment();
 
   const handleConfirmAppointment = () => {
-    if (!doctorId || !user || !dateConfirmed) return;
+    if (!doctorId || !user || !dateConfirmed || !selectedMethod) return;
 
     createAppointment({
       doctorId: idDoctor,
       patientId: user.id!,
       date: dateConfirmed,
+      healthCoverage: selectedMethod,
     });
 
     router.replace("/(tabs)");
@@ -125,6 +126,7 @@ export default function Payment() {
           }
           style={{ marginHorizontal: 0 }}
           onPress={handleConfirmAppointment}
+          disabled={!selectedMethod || isPending}
         />
       </View>
     </ScrollView>

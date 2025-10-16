@@ -33,4 +33,5 @@ export type Appointment = {
   doctorId: string;
   patientId: string;
   date: string;
+  healthCoverage: string;
 };
