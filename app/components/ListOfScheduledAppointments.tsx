@@ -1,9 +1,14 @@
 import { Colors } from "@/constants/Colors";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGetAppointmentsByUserId } from "@/queries/appointment";
 import Calendar from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 export default function ListOfScheduledAppointments() {
+  const { user } = useAuth();
+  const { data, isLoading } = useGetAppointmentsByUserId(user?.id || "");
+
   return (
     <View style={styles.container}>
       <View style={styles.containerAvatarNameDoctor}>

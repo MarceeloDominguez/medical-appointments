@@ -1,6 +1,9 @@
-import { createAppointment } from "@/services/AppointmentService";
+import {
+  createAppointment,
+  getAppointmentsByUserId,
+} from "@/services/AppointmentService";
 import { Appointment } from "@/type/type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateAppointment = () => {
   const queryClient = useQueryClient();
@@ -14,5 +17,13 @@ export const useCreateAppointment = () => {
     onError: (error) => {
       console.error("Error creating appointment:", error);
     },
+  });
+};
+
+export const useGetAppointmentsByUserId = (userId: string) => {
+  return useQuery({
+    queryKey: ["appointments", userId],
+    queryFn: () => getAppointmentsByUserId(userId),
+    enabled: !!userId,
   });
 };
