@@ -1,13 +1,14 @@
 import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 type Props = {
   title: string;
   subtitle: string;
   showIconBell?: boolean;
   children?: React.ReactNode;
+  style?: ViewStyle;
 };
 
 export default function Header({
@@ -15,9 +16,10 @@ export default function Header({
   subtitle,
   showIconBell = false,
   children,
+  style,
 }: Props) {
   return (
-    <View>
+    <View style={style}>
       <View style={styles.wrapperText}>
         <View style={{ flex: 1, marginRight: 10 }}>
           <Text style={styles.title}>{title}</Text>

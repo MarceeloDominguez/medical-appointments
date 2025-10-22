@@ -2,17 +2,19 @@ import { Colors } from "@/constants/Colors";
 import IconSearch from "@expo/vector-icons/Ionicons";
 import IconsFilter from "@expo/vector-icons/MaterialIcons";
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, ViewStyle } from "react-native";
 
 type CustomSearchProps = {
   placeholderText?: string;
+  style?: ViewStyle;
 };
 
 export default function CustomSearch({
   placeholderText = "Placeholder text",
+  style,
 }: CustomSearchProps) {
   return (
-    <View style={styles.wrapperInput}>
+    <View style={[styles.wrapperInput, style]}>
       <IconSearch
         name="search-outline"
         size={20}
